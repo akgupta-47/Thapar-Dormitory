@@ -1,10 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 const app = express();
 
 const dotenv = require('dotenv');
 
-dotenv.config({ path: './config.env' });
+dotenv.config();
 
 const DB = process.env.DATABASE.replace(
   '<PASSWORD>',
@@ -19,6 +20,10 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => console.log('DB connection successful still'));
+
+app.use(bodyParser.json());
+  
+app.use('/api/auth', require('./routes/authRoutes'));
 
 app.get('/', (req, res) => {
   res.status(200).send('server says hello');
