@@ -1,22 +1,21 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
+const express = require("express");
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
 const app = express();
-app.use(express.json());
 
-const routes = require('./routes/userRoutes');
-
-if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'));
+const routes = require("./routes/userRoutes");
+app.use(bodyParser.json());
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
 }
 
-const dotenv = require('dotenv');
+const dotenv = require("dotenv");
 
 dotenv.config();
-dotenv.config({ path: './.env' });
+dotenv.config({ path: "./.env" });
 
 const DB = process.env.DATABASE.replace(
-  '<PASSWORD>',
+  "<PASSWORD>",
   process.env.DATABASE_PASSWORD
 );
 
@@ -27,15 +26,16 @@ mongoose
     useFindAndModify: false,
     useUnifiedTopology: true,
   })
-  .then(() => console.log('DB connection successful still'));
+  .then(() =>
+    console.log("DB connection successful still")
+  );
 
-app.use('./posts', routes);
-app.use(bodyParser.json());
-  
-app.use('/api/auth', require('./routes/authRoutes'));
+app.use("/posts", routes);
 
-app.get('/', (req, res) => {
-  res.status(200).send('server says hello');
+app.use("/api/auth", require("./routes/authRoutes"));
+
+app.get("/", (req, res) => {
+  res.status(200).send("server says hello");
 });
 
 const port = process.env.PORT || 3000;
