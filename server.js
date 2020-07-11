@@ -14,7 +14,8 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
-app.use('./posts', routes);
+app.use('/posts', routes);
+
   
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/image',require('./routes/imageRoutes'));
