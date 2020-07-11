@@ -17,6 +17,7 @@ if (process.env.NODE_ENV === "development") {
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/posts", routes);
 app.use("/api/image", require("./routes/imageRoutes"));
+app.use('/api/profile',require('./routes/profileRoutes'));
 
 app.get("/", (req, res) => {
   res.status(200).send("server says hello");
