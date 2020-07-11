@@ -5,6 +5,8 @@ const { DB, getGfs } = require('../config/db');
 const crypto = require('crypto');
 const router = require('./userRoutes');
 const path = require('path');
+const User = require('../models/userModel');
+const auth = require('../middleware/auth');
 
 const storage = new GridFsStorage({
     url: DB,
@@ -26,8 +28,33 @@ const storage = new GridFsStorage({
 });
 const upload = multer({ storage });
 
-router.post('/upload', upload.single('image'), (req,res)=>{
-    console.log('done');
+router.post('/userimage/upload', [auth,upload.single('image')], async(req,res)=>{
+  try{
+    let user = await User.findById(req.user.id).select("-password");
+    if(user.displayPicture && user.displayPicture.charAt(0)=== '/')
+    {
+      getGfs().remove({filename:user.displayPicture, root:'images'}, (err,gridStore)=>{
+        if(err)
+        {
+           return res.status(404).json({err});
+        }
+      });  
+    }
+    if(!req.file)
+    {
+      user.displayPicture = 'https://www.tenforums.com/geek/gars/images/2/types/thumb__ser.png';
+      await user.save();
+    }
+    else
+    {
+      user.displayPicture = `/api/image/display/${req.file.filename}`;
+      await user.save();
+    }
+    res.send(user);
+  }catch(e){
+    console.log(e);
+    return res.status(400).send('server error');
+  }  
 })
 
 router.get('/display/:filename',(req,res)=>{
