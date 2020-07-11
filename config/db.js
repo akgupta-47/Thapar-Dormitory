@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const Grid = require('gridfs-stream');
 
 dotenv.config();
 
@@ -8,7 +9,7 @@ const DB = process.env.DATABASE.replace(
     process.env.DATABASE_PASSWORD
 );
 
-let gfs;
+let gfs = {};
 
 const connectDB = async()=>{
     try{
@@ -17,11 +18,22 @@ const connectDB = async()=>{
             useCreateIndex: true,
             useFindAndModify: false,
             useUnifiedTopology: true,
-        })
+        });
+        gfs = Grid(connectionReturns.connections[0].db, mongoose.mongo);
+        gfs.collection('images');
         console.log('DB connection successful still');
     }catch(e){
         return console.log(e);
     }
 }
 
-module.exports = connectDB;
+connectDB();
+
+const getGfs = () =>{
+    return gfs;
+}
+
+module.exports = {
+    getGfs,
+    DB
+};
