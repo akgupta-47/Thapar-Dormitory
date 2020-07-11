@@ -29,7 +29,7 @@ mongoose
   })
   .then(() => console.log('DB connection successful still'));
 
-app.use('./posts', routes);
+app.use('/posts', routes);
 app.use(bodyParser.json());
   
 app.use('/api/auth', require('./routes/authRoutes'));
