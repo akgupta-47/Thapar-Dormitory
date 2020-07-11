@@ -1,6 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
+const dotenv = require('dotenv');
+const morgan = require('morgan');
+require('./config/db');
+
+dotenv.config();
 const app = express();
 app.use(express.json());
 
@@ -10,29 +14,11 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
-const dotenv = require('dotenv');
-
-dotenv.config();
-dotenv.config({ path: './.env' });
-
-const DB = process.env.DATABASE.replace(
-  '<PASSWORD>',
-  process.env.DATABASE_PASSWORD
-);
-
-mongoose
-  .connect(DB, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log('DB connection successful still'));
-
 app.use('/posts', routes);
-app.use(bodyParser.json());
+
   
 app.use('/api/auth', require('./routes/authRoutes'));
+app.use('/api/image',require('./routes/imageRoutes'));
 
 app.get('/', (req, res) => {
   res.status(200).send('server says hello');
