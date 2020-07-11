@@ -33,7 +33,7 @@ router.post('/userimage/upload', [auth,upload.single('image')], async(req,res)=>
     let user = await User.findById(req.user.id).select("-password");
     if(user.displayPicture && user.displayPicture.charAt(0)=== '/')
     {
-      getGfs().remove({filename:user.displayPicture, root:'images'}, (err,gridStore)=>{
+      getGfs().remove({filename:user.displayPicture.split('/')[4], root:'images'}, (err,gridStore)=>{
         if(err)
         {
            return res.status(404).json({err});
@@ -67,7 +67,7 @@ router.get('/display/:filename',(req,res)=>{
             });
         }
         //Check if image
-        if(file.contentType === 'image/jpeg'|| file.contentType === 'image/png')
+        if(file.contentType === 'image/jpeg'|| file.contentType === 'image/png' || file.contentType === 'image/jpg' || file.contentType === 'image/gif')
         {
             //Read output to browser
             const readstream = getGfs().createReadStream(file.filename);
