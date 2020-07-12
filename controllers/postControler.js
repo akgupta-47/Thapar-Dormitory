@@ -1,10 +1,10 @@
-const Post = require('../models/postModel');
+const Post = require("../models/postModel");
 
 exports.getAllPosts = async (req, res) => {
   try {
     const posts = await Post.find();
     res.status(200).json({
-      status: 'success',
+      status: "success",
       results: posts.length,
       data: {
         posts,
@@ -12,7 +12,7 @@ exports.getAllPosts = async (req, res) => {
     });
   } catch (err) {
     res.status(404).json({
-      status: 'fail',
+      status: "fail",
       message: err,
     });
   }
@@ -22,14 +22,14 @@ exports.createPost = async (req, res) => {
   try {
     const newPost = await Post.create(req.body);
     res.status(201).json({
-      status: 'success',
+      status: "success",
       data: {
         post: newPost,
       },
     });
   } catch (err) {
     res.status(400).json({
-      status: 'fail',
+      status: "fail",
       message: err,
     });
   }
