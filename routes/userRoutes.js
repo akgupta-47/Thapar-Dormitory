@@ -10,10 +10,6 @@ router
   .post(
     [
       auth,
-      check('title', 'You must provide a title (i.e. Hostel Title etc.)!')
-        .not()
-        .isEmpty()
-        .trim(),
       check('description', 'You must provide the information about your post!')
         .not()
         .isEmpty()

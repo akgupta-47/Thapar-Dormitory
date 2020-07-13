@@ -1,13 +1,12 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const postSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Users',
+    ref: "Users",
   },
   title: {
     type: String,
-    required: [true, 'Every post should have Title'],
   },
   image: {
     type: [String],
@@ -15,7 +14,7 @@ const postSchema = new mongoose.Schema({
   },
   description: {
     type: String,
-    required: [true, 'Every post should have a description'],
+    required: [true, "Every post should have a description"],
   },
   fileAttached: {
     type: [String],
@@ -23,10 +22,13 @@ const postSchema = new mongoose.Schema({
   },
   tag: {
     type: String,
-    default: 'Student',
+    default: "Student",
+  },
+  hostel: {
+    type: String,
   },
 });
 
-const Post = mongoose.model('Post', postSchema);
+const Post = mongoose.model("Post", postSchema);
 
 module.exports = Post;

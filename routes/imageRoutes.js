@@ -59,17 +59,14 @@ router.post('/userimage/upload', [auth,upload.single('image')], async(req,res)=>
 
 router.get('/display/:filename',(req,res)=>{
     getGfs().files.findOne({filename: req.params.filename}, (err, file)=>{
-        //Check if file
         if(!file || file.length==0)
         {
             return res.status(404).json({
                 err: 'No file exists!'
             });
         }
-        //Check if image
         if(file.contentType === 'image/jpeg'|| file.contentType === 'image/png' || file.contentType === 'image/jpg' || file.contentType === 'image/gif')
         {
-            //Read output to browser
             const readstream = getGfs().createReadStream(file.filename);
             readstream.pipe(res);
         }        
