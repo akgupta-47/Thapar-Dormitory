@@ -1,9 +1,13 @@
 const mongoose = require('mongoose');
 
 const postSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Users',
+  },
   title: {
     type: String,
-    required: true,
+    required: [true, 'Every post should have Title'],
   },
   image: {
     type: [String],
@@ -11,7 +15,15 @@ const postSchema = new mongoose.Schema({
   },
   description: {
     type: String,
-    required: true,
+    required: [true, 'Every post should have a description'],
+  },
+  fileAttached: {
+    type: [String],
+    default: undefined,
+  },
+  tag: {
+    type: String,
+    default: 'Student',
   },
 });
 

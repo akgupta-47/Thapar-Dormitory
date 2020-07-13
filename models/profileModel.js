@@ -8,11 +8,12 @@ const profileSchema = new Schema({
   },
   role: {
     type: String,
-    required: true,
+    required: [true, 'Every profile should contain users role'],
+    default: 'Student',
   },
   hostel: {
     type: String,
-    required: true,
+    required: [true, 'Every profile should contain users Hostel'],
   },
   roomInfo: {
     type: String,
@@ -25,15 +26,15 @@ const profileSchema = new Schema({
     type: Number,
     unique: true,
     minlength: 9,
-    maxlength: 9
+    maxlength: 9,
   },
   phoneNumber: {
     type: Number,
-    required: true,
+    required: [true, 'Every profile should contain users Contact info'],
     unique: true,
-    minlength:10,
-    maxlength: 10
-  }
+    minlength: 10,
+    maxlength: 10,
+  },
 });
 
 const Profile = mongoose.model('profile', profileSchema);
