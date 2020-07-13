@@ -24,16 +24,16 @@ const profileSchema = new Schema({
   rollNumber: {
     type: Number,
     unique: true,
-    minlength: 1,
+    minlength: 9,
+    maxlength: 9
   },
   phoneNumber: {
-    type: String,
+    type: Number,
     required: true,
     unique: true,
-  },
-  profilePic: {
-    type: String,
-  },
+    minlength:10,
+    maxlength: 10
+  }
 });
 
 const Profile = mongoose.model('profile', profileSchema);

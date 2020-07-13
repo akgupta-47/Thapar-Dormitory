@@ -1,30 +1,38 @@
-const express = require('express');
-const { check, validationResult } = require('express-validator');
-const Profile = require('../models/profileModel');
-const auth = require('../middleware/auth');
-const User = require('../models/userModel');
-const profileController = require('../controllers/profileController');
+const express = require("express");
+const { check, validationResult } = require("express-validator");
+const Profile = require("../models/profileModel");
+const auth = require("../middleware/auth");
+const User = require("../models/userModel");
+const profileController = require("../controllers/profileController");
 
 const router = express.Router();
 
 router.post(
-  '/',
+  "/",
   [
     auth,
     check(
-      'role',
-      'You must provide your role (i.e. Student/Warden/Caretaker etc.)!'
+      "role",
+      "You must provide your role (i.e. Student/Warden/Caretaker etc.)!"
     )
       .not()
       .isEmpty()
       .trim(),
     check(
-      'hostel',
-      'You must provide the information about (name of) your hostel!'
+      "hostel",
+      "You must provide the information about (name of) your hostel!"
     )
       .not()
       .isEmpty()
       .trim(),
+    check("phoneNumber", "You must provide your phone number!")
+      .not()
+      .isEmpty()
+      .isLength({ min: 10, max: 10 }),
+    check("rollNumber", "You must provide a valid roll number").isLength({
+      min: 9,
+      max: 9,
+    }),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -42,11 +50,10 @@ router.post(
     } = req.body;
     let profile = {};
     if (laundryNumber) {
-      console.log(await Profile.findOne({ laundryNumber: laundryNumber }));
-      if (await Profile.findOne({ laundryNumber: laundryNumber })) {
+      if (await Profile.findOne({ laundryNumber: laundryNumber.trim() })) {
         return res
           .status(409)
-          .json({ errors: 'This Laundry Number is already in use!' });
+          .json({ errors: "This Laundry Number is already in use!" });
       }
       profile.laundryNumber = laundryNumber.trim();
     }
@@ -54,7 +61,7 @@ router.post(
       if (await Profile.findOne({ rollNumber: rollNumber })) {
         return res
           .status(409)
-          .json({ errors: 'This Roll Number is already in use!' });
+          .json({ errors: "This Roll Number is already in use!" });
       }
       profile.rollNumber = rollNumber;
     }
@@ -62,7 +69,7 @@ router.post(
       if (await Profile.findOne({ phoneNumber: phoneNumber })) {
         return res
           .status(409)
-          .json({ errors: 'This Phone Number is already in use!' });
+          .json({ errors: "This Phone Number is already in use!" });
       }
       profile.phoneNumber = phoneNumber;
     }
@@ -71,28 +78,47 @@ router.post(
     profile.role = role.trim();
     profile.user = req.user.id;
     try {
-      const dp = await User.findOne({ _id: profile.user });
-      profile.profilePic = dp.displayPicture;
-    } catch {
-      console.log('photo not found');
-      return res.status(500).json({
-        status: 'fail',
-      });
-    }
-    try {
       const userProfile = await new Profile(profile).save();
       res.json(userProfile);
     } catch (e) {
       console.log(e);
-      return res.status(500).send('server error');
+      return res.status(500).send("server error");
     }
   }
 );
-router
-  .route('/:id')
-  .get(profileController.getProfile)
-  .patch(auth, profileController.updateProfile);
 
-router.route('/').patch(auth, profileController.updateProfile);
+router.route("/:id").get(profileController.getProfile);
+
+router
+  .route("/")
+  .get(auth, profileController.getCurrentUserProfile)
+  .patch(
+    [
+      auth,
+      check(
+        "role",
+        "You must provide your role (i.e. Student/Warden/Caretaker etc.)!"
+      )
+        .not()
+        .isEmpty()
+        .trim(),
+      check(
+        "hostel",
+        "You must provide the information about (name of) your hostel!"
+      )
+        .not()
+        .isEmpty()
+        .trim(),
+      check("phoneNumber", "You must provide your phone number!")
+        .not()
+        .isEmpty()
+        .isLength({ min: 10, max: 10 }),
+      check("rollNumber", "You must provide a valid roll number").isLength({
+        min: 9,
+        max: 9,
+      }),
+    ],
+    profileController.updateProfile
+  );
 
 module.exports = router;
