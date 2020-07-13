@@ -38,10 +38,12 @@ body {
     right: 20px;
     top: 15px;
     display:none;
+
 }
     
 @media screen and  (max-width: 770px){
     .icon{
+
         display: inline-block;
         float: none;
     }
@@ -150,7 +152,7 @@ body {
   font-weight: bold;
 }
 .lead
-{
+
     font-weight: 500;
     font-size: medium;
 }
@@ -158,6 +160,7 @@ body {
   .lead{
     font-size: small;
   }
+
 }
 
 @media screen and (min-width: 768px) {

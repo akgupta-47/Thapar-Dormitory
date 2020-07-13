@@ -5,6 +5,9 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  displayPicture:{
+    type:String
+  },
   email: {
     type: String,
     required: true,
@@ -20,6 +23,6 @@ const UserSchema = new mongoose.Schema({
   },
 });
 
-let User = mongoose.model("user", UserSchema);
+const User = mongoose.model("User", UserSchema);
 
 module.exports = User;
