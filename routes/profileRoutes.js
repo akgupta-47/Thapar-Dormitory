@@ -32,7 +32,14 @@ router.post(
       console.log(errors);
       return res.status(400).json({ errors: errors.array() });
     }
-    const { role, hostel, roomInfo, laundryNumber, rollNumber } = req.body;
+    const {
+      role,
+      hostel,
+      roomInfo,
+      laundryNumber,
+      rollNumber,
+      phoneNumber,
+    } = req.body;
     let profile = {};
     if (laundryNumber) {
       console.log(await Profile.findOne({ laundryNumber: laundryNumber }));
@@ -51,10 +58,27 @@ router.post(
       }
       profile.rollNumber = rollNumber;
     }
+    if (phoneNumber) {
+      if (await Profile.findOne({ phoneNumber: phoneNumber })) {
+        return res
+          .status(409)
+          .json({ errors: 'This Phone Number is already in use!' });
+      }
+      profile.phoneNumber = phoneNumber;
+    }
     if (roomInfo) profile.roomInfo = roomInfo.trim();
     profile.hostel = hostel.trim();
     profile.role = role.trim();
     profile.user = req.user.id;
+    try {
+      const dp = await User.findOne({ _id: profile.user });
+      profile.profilePic = dp.displayPicture;
+    } catch {
+      console.log('photo not found');
+      return res.status(500).json({
+        status: 'fail',
+      });
+    }
     try {
       const userProfile = await new Profile(profile).save();
       res.json(userProfile);
