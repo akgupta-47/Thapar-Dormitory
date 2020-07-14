@@ -5,7 +5,7 @@ const laundrySchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Users',
   },
-  name: {
+  laundryNumber: {
     type: String,
   },
   enrty_date: {
