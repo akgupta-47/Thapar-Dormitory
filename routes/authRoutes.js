@@ -5,11 +5,11 @@ const router = express.Router();
 const { check, validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const dotenv = require('dotenv');
+const dotenv = require("dotenv");
 
-dotenv.config(); 
+dotenv.config();
 
-router.get("/login", auth, async (req, res) => {
+router.get("/", auth, async (req, res) => {
   try {
     let user = await User.findById(req.user.id).select("-password");
     res.send(user);
@@ -18,8 +18,6 @@ router.get("/login", auth, async (req, res) => {
   }
 });
 
-//@access Public
-//@route Post api/auth
 //@desc Login user
 router.post(
   "/login",
@@ -48,7 +46,7 @@ router.post(
       jwt.sign(
         payload,
         process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: '18000s' },
+        { expiresIn: "18000s" },
         (err, token) => {
           if (err) throw err;
           res.json({ token });
@@ -60,9 +58,7 @@ router.post(
   }
 );
 
-//@route Post api/users
 //@desc Register user
-//@access Public
 router.post(
   "/register",
   [
@@ -93,7 +89,7 @@ router.post(
       jwt.sign(
         payload,
         process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: '18000s' },
+        { expiresIn: "18000s" },
         (err, token) => {
           if (err) throw err;
           res.json({ token });
@@ -102,6 +98,27 @@ router.post(
     } catch (e) {
       res.status(500).send("Server Error");
     }
+  }
+);
+
+//Change Password
+router.put(
+  "/",
+  [
+    auth,
+    check("password", "Minimum length of your new password must be 6").isLength({
+      min: 6,
+    }),
+  ],
+  async (req, res) => {
+    let user = await User.findById(req.user.id);
+    const { newPassword } = req.body;
+    if (await bcrypt.compare(newPassword, user.password)) {
+      return res.status(406).json({error: 'Your new password cannot be the same as your old password!'});
+    }
+    user.password = await bcrypt.hash(newPassword, 10);
+    await user.save();
+    res.json({success: 'Your password has been successfully changed!'});
   }
 );
 
