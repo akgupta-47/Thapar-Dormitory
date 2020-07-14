@@ -18,6 +18,7 @@ app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/posts', routes);
 app.use('/api/image', require('./routes/imageRoutes'));
 app.use('/api/profile', require('./routes/profileRoutes'));
+app.use('/api/laundry', require('./routes/laundryRoutes'));
 
 app.get('/', (req, res) => {
   res.status(200).send('server says hello');
