@@ -35,6 +35,7 @@ exports.updateProfile = async (req, res) => {
     laundryNumber,
     rollNumber,
     phoneNumber,
+    name,
   } = req.body;
   let profile = {};
   if (laundryNumber) {
@@ -79,10 +80,13 @@ exports.updateProfile = async (req, res) => {
   profile.hostel = hostel.trim().toUpperCase();
   let roleTrimmed = role.trim();
   profile.role =
-      roleTrimmed.slice(0, 1).toUpperCase() +
-      roleTrimmed.slice(1, roleTrimmed.length).toLowerCase();
+    roleTrimmed.slice(0, 1).toUpperCase() +
+    roleTrimmed.slice(1, roleTrimmed.length).toLowerCase();
   profile.user = req.user.id;
   try {
+    let user = await User.findById(req.user.id).select('-password');
+    user.name = name;
+    await user.save();
     let newProfile = await Profile.findOneAndUpdate(
       { user: req.user.id },
       profile,
@@ -96,6 +100,7 @@ exports.updateProfile = async (req, res) => {
       status: "success",
       data: {
         newProfile,
+        name: user.name
       },
     });
   } catch (err) {
