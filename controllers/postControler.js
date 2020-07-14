@@ -5,7 +5,21 @@ const {getGfs,getGis} = require('../config/db');
 exports.getAllPosts = async (req, res) => {
   try {
     const userProfile = await Profile.findOne({user:req.user.id});
-    const posts = await Post.find({hostel:userProfile.hostel, tag:userProfile.role});
+    const retrievedPosts = await Post.find();
+    const posts = retrievedPosts.filter(retrievedPost=>{
+      if(retrievedPost.hostel === userProfile.hostel && retrievedPost.tag === userProfile.role)
+        return true;
+      else if(retrievedPost.tag === "Everyone")
+        return true;
+      else if(userProfile.role === "Mess commitee")
+      {
+        let role = "Student";
+        if(retrievedPost.hostel === userProfile.hostel && retrievedPost.tag === role)
+        return true;
+      }
+      else 
+        return false;
+    })
     if(posts.length === 0)
       return res.json({status: "fail", message: 'No posts to show!'})
     res.status(200).json({
