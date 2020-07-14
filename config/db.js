@@ -9,6 +9,7 @@ const DB = process.env.DATABASE.replace(
   process.env.DATABASE_PASSWORD
 );
 
+let gis = {};
 let gfs = {};
 
 const connectDB = async () => {
@@ -19,8 +20,10 @@ const connectDB = async () => {
       useFindAndModify: false,
       useUnifiedTopology: true,
     });
+    gis = Grid(connectionReturns.connections[0].db, mongoose.mongo);
+    gis.collection('images');
     gfs = Grid(connectionReturns.connections[0].db, mongoose.mongo);
-    gfs.collection('images');
+    gfs.collection('otherFiles');
     console.log('DB connection successful still');
   } catch (e) {
     return console.log(e);
@@ -29,11 +32,15 @@ const connectDB = async () => {
 
 connectDB();
 
+const getGis = () => {
+  return gis;
+};
 const getGfs = () => {
   return gfs;
 };
 
 module.exports = {
   getGfs,
+  getGis,
   DB,
 };

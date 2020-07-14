@@ -1,18 +1,18 @@
 const express = require("express");
-const { getGfs } = require("../config/db");
+const { getGis } = require("../config/db");
 const router = express.Router();
 const User = require("../models/userModel");
 const auth = require("../middleware/auth");
-const { uploadImage } = require("../middleware/fileUpload");
+const upload = require("../middleware/fileUpload");
 
 router.post(
   "/userimage/upload",
-  [auth, uploadImage.single("image")],
+  [auth, upload.single("image")],
   async (req, res) => {
     try {
       let user = await User.findById(req.user.id).select("-password");
       if (user.displayPicture && user.displayPicture.charAt(0) === "/") {
-        getGfs().remove(
+        getGis().remove(
           { filename: user.displayPicture.split("/")[4], root: "images" },
           (err, gridStore) => {
             if (err) {
@@ -38,7 +38,7 @@ router.post(
 );
 
 router.get("/display/:filename", (req, res) => {
-  getGfs().files.findOne({ filename: req.params.filename }, (err, file) => {
+  getGis().files.findOne({ filename: req.params.filename }, (err, file) => {
     if (!file || file.length == 0) {
       return res.status(404).json({
         err: "No file exists!",
@@ -50,7 +50,7 @@ router.get("/display/:filename", (req, res) => {
       file.contentType === "image/jpg" ||
       file.contentType === "image/gif"
     ) {
-      const readstream = getGfs().createReadStream(file.filename);
+      const readstream = getGis().createReadStream(file.filename);
       readstream.pipe(res);
     } else {
       res.status(400).json({
