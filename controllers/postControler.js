@@ -4,7 +4,10 @@ const {getGfs,getGis} = require('../config/db');
 
 exports.getAllPosts = async (req, res) => {
   try {
-    const posts = await Post.find();
+    const userProfile = await Profile.findOne({user:req.user.id});
+    const posts = await Post.find({hostel:userProfile.hostel, tag:userProfile.role});
+    if(posts.length === 0)
+      return res.json({status: "fail", message: 'No posts to show!'})
     res.status(200).json({
       status: "success",
       results: posts.length,
@@ -22,12 +25,7 @@ exports.getAllPosts = async (req, res) => {
 
 exports.createPost = async (req, res) => {
   if(req.body) req.body = JSON.parse(JSON.stringify(req.body));
-  if (req.files) 
-  {
-    req.files = JSON.parse(JSON.stringify(req.files));
-    if(req.files.image) var image = [`/api/image/display/${req.files.image[0].filename}`];
-    if(req.files.file) var fileAttached = [`/posts/file/${req.files.file[0].filename}`];
-  }
+  if (req.files) req.files = JSON.parse(JSON.stringify(req.files));
   if((!req.body) || (!req.body.description) || (req.body.description.trim().length===0))
   { 
     if(req.files && req.files.image)
@@ -61,8 +59,8 @@ exports.createPost = async (req, res) => {
       trimmedTag.slice(1, trimmedTag.length).toLowerCase();
   }
   post.user = req.user.id;
-  if(image.length!==0) post.image = image;
-  if(fileAttached.length!==0) post.fileAttached = fileAttached;
+  if(req.files.image) post.image = [`/api/image/display/${req.files.image[0].filename}`];
+  if(req.files.file)  post.fileAttached = [`/posts/file/${req.files.file[0].filename}`];
   try {
     const { hostel } = await Profile.findOne({ user: req.user.id });
     post.hostel = hostel;
