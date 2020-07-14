@@ -1,6 +1,6 @@
 const User = require("../models/userModel");
 const Profile = require("../models/profileModel");
-const { check, validationResult } = require("express-validator");
+const { validationResult } = require("express-validator");
 
 exports.getProfile = async (req, res) => {
   try {
@@ -11,7 +11,7 @@ exports.getProfile = async (req, res) => {
       data: {
         profile,
         name: user.name,
-        displayPicture: user.displayPicture
+        displayPicture: user.displayPicture,
       },
     });
   } catch (err) {
@@ -38,22 +38,24 @@ exports.updateProfile = async (req, res) => {
   } = req.body;
   let profile = {};
   if (laundryNumber) {
-    let retrievedProfiles = await Profile.find({ laundryNumber: laundryNumber.trim() });
-    retrievedProfiles = retrievedProfiles.filter(retProfile=>{
+    let retrievedProfiles = await Profile.find({
+      laundryNumber: laundryNumber.trim().toUpperCase(),
+    });
+    retrievedProfiles = retrievedProfiles.filter((retProfile) => {
       return retProfile.user.toString() !== req.user.id.toString();
-    })
+    });
     if (retrievedProfiles.length !== 0) {
       return res
         .status(409)
         .json({ errors: "This Laundry Number is already in use!" });
     }
-    profile.laundryNumber = laundryNumber.trim();
+    profile.laundryNumber = laundryNumber.trim().toUpperCase();
   }
   if (rollNumber) {
     let retrievedProfiles = await Profile.find({ rollNumber: rollNumber });
-    retrievedProfiles = retrievedProfiles.filter(retProfile=>{
+    retrievedProfiles = retrievedProfiles.filter((retProfile) => {
       return retProfile.user.toString() !== req.user.id.toString();
-    })
+    });
     if (retrievedProfiles.length !== 0) {
       return res
         .status(409)
@@ -63,9 +65,9 @@ exports.updateProfile = async (req, res) => {
   }
   if (phoneNumber) {
     let retrievedProfiles = await Profile.find({ phoneNumber: phoneNumber });
-    retrievedProfiles = retrievedProfiles.filter(retProfile=>{
+    retrievedProfiles = retrievedProfiles.filter((retProfile) => {
       return retProfile.user.toString() !== req.user.id.toString();
-    })
+    });
     if (retrievedProfiles.length !== 0) {
       return res
         .status(409)
@@ -73,9 +75,12 @@ exports.updateProfile = async (req, res) => {
     }
     profile.phoneNumber = phoneNumber;
   }
-  if (roomInfo) profile.roomInfo = roomInfo.trim();
-  profile.hostel = hostel.trim();
-  profile.role = role.trim();
+  if (roomInfo) profile.roomInfo = roomInfo.trim().toUpperCase();
+  profile.hostel = hostel.trim().toUpperCase();
+  let roleTrimmed = role.trim();
+  profile.role =
+      roleTrimmed.slice(0, 1).toUpperCase() +
+      roleTrimmed.slice(1, roleTrimmed.length).toLowerCase();
   profile.user = req.user.id;
   try {
     let newProfile = await Profile.findOneAndUpdate(
@@ -110,7 +115,7 @@ exports.getCurrentUserProfile = async (req, res) => {
       data: {
         profile,
         name: user.name,
-        displayPicture: user.displayPicture
+        displayPicture: user.displayPicture,
       },
     });
   } catch (err) {

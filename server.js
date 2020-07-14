@@ -8,7 +8,7 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
-const routes = require('./routes/userRoutes');
+const routes = require('./routes/postRoutes');
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
