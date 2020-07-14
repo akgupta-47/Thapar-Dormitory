@@ -124,6 +124,7 @@ router
         min: 9,
         max: 9,
       }),
+      check("name", "You must provide your name!").not().isEmpty(),
     ],
     profileController.updateProfile
   );
