@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    />
+    <link rel="stylesheet" href="login.css" />
+    <title>Login/SingUp</title>
+  </head>
+  <body>
+    <div class="container" id="container">
+      <div class="form-container sign-up-container">
+        <form action="#">
+          <h1>Create Account</h1>
+          <span>Use Thapar emailId for registration</span>
+          <input type="text" placeholder="Name" />
+          <input type="email" placeholder="Email" />
+          <input type="password" placeholder="Password" />
+          <div class="modal_form">
+            <h2>Enter Details</h2> 
+            <!--Step 1 : Adding HTML-->
+            <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</button> 
+          
+            <div id="id01" class="modal"> 
+            <form class="modal-content animate" action="/action_page.php"> 
+              <div class="imgcontainer"> 
+                <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span> 
+                <img src="undraw_profile_pic_ic5t.png" alt="Avatar" class="avatar"> 
+              </div> 
+        
+              <div class="container_modal"> 
+                        <label><b>Roll Number</b></label>
+                        <input
+                          type="text"
+                          placeholder="Enter Roll Number"
+                          name="uname"
+                          required
+                        />
+        
+                        <label><b>Phone Number</b></label>
+                        <input
+                          type="password"
+                          placeholder="Enter Phone Number"
+                          name="psw"
+                          required
+                        />
+        
+                        <label><b>Laundry Number</b></label>
+                        <input
+                          type="text"
+                          placeholder="Enter Laundry Number"
+                          name="uname"
+                          required
+                        />
+        
+                        <label><b>Room Number</b></label>
+                        <input
+                          type="text"
+                          placeholder="Enter Room Number"
+                          name="uname"
+                          required
+                        />
+                        <label for="hostel">Choose Your Hostel</label><br />
+                        <select class="hostel_choice" name="Hostel">
+                          <option value="Hostel-A">Hostel-A</option>
+                          <option value="Hostel-B">Hostel-B</option>
+                          <option value="Hostel-C">Hostel-C</option>
+                          <option value="Hostel-D">Hostel-D</option>
+                          <option value="Hostel-D">Hostel-FRE-D</option>
+                          <option value="Hostel-D">Hostel-G,E,I</option>
+                          <option value="Hostel-D">Hostel-H</option>
+                          <option value="Hostel-D">Hostel-J</option>
+                          <option value="Hostel-D">Hostel-K</option>
+                          <option value="Hostel-D">Hostel-L</option>
+                          <option value="Hostel-D">Hostel-M</option>
+                          <option value="Hostel-D">Hostel-PG</option> </select
+                        ><br />
+                        <label for="hostel">Choose Your Role</label><br />
+                        <select class="hostel_choice" name="Hostel">
+                          <option value="Hostel-A">Student</option>
+                          <option value="Hostel-B">Authority</option>
+                          <option value="Hostel-C">Laundry</option>
+                          <option value="Hostel-D">Mess Committee</option>
+                          <option value="Hostel-D"
+                            >Maintainance/Cleaning</option
+                          > </select
+                        ><br />
+                        <label for="img">Select image:</label>
+                        <input type="file" id="img" name="img" accept="image/*" />
+                        <input type="submit" />
+                        <button type="submit">Submit Info.</button>
+                      </div>
+        
+                      <div class="container" style="background-color: #f1f1f1;">
+                        <button type="button" class="cancelbtn">Cancel</button>
+                      </div>
+            </form> 
+          </div>
+          <button>Sign Up</button>
+          <span>Follow Us on :)</span>
+          <div class="social-container">
+            <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+            <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </form>                
+      </div>
+      </div>
+      <div class="form-container sign-in-container">
+        <form action="#">
+          <h1>Sign in</h1>
+          <span>Use Thapar emailId for login</span>
+          <input type="email" placeholder="Email" />
+          <input type="password" placeholder="Password" />
+          <a href="#">Forgot your password?</a>
+          <label>
+            <input
+              id="remember"
+              type="checkbox"
+              checked="checked"
+              name="remember"
+            />
+            Remember-me
+          </label>
+          <button>Sign In</button>
+          <span>Follow Us on :)</span>
+          <div class="social-container">
+            <a href="#" class="social"><i class="fa fa-facebook-f"></i></a>
+            <a href="#" class="social"><i class="fa fa-google-plus-g"></i></a>
+            <a href="#" class="social"><i class="fa fa-linkedin-in"></i></a>
+          </div>
+        </form>
+      </div>
+      <div class="overlay-container">
+        <div class="overlay">
+          <div class="overlay-panel overlay-left">
+            <h1>Welcome Back!</h1>
+            <p>
+              Sign In!! and tell us your most craziest adventures of your hostel
+              life ;)
+            </p>
+            <button class="ghost" id="signIn">Sign In</button>
+          </div>
+          <div class="overlay-panel overlay-right">
+            <h1>Hello, Thaparian!</h1>
+            <p>
+              Take your first step to start your most awesomest journey with us
+            </p>
+            <button class="ghost" id="signUp">Sign Up</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="login.js"></script>
+
+    <script src="https://use.fontawesome.com/f5bff07e2c.js"></script>
+  </body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
+    />
+    <title>Student Dashboard</title>
+  </head>
+  <body>
+    <input type="checkbox" id="check" />
+    <header>
+      <label for="check">
+        <i class="fas fa-bars" id="sidebar_btn"></i>
+      </label>
+      <div class="left_area">
+        <h3>Student <span>Dashboard</span></h3>
+      </div>
+      <div class="right_area">
+        <a href="#" class="logout_btn">LogOut</a>
+      </div>
+    </header>
+
+    <div class="sidebar">
+      <center>
+        <img src="rishikesh_fav.jpeg" class="profile_image" alt="" />
+        <h4>Akshat</h4>
+      </center>
+      <a href="dashboard.html"
+        ><i class="fas fa-desktop"></i><span>Dashboard</span></a
+      >
+      <a href="departure.html"
+        ><i class="fas fa-plane"></i><span>Departure Notice</span></a
+      >
+      <a href="mess.html"
+        ><i class="fas fa-coffee"></i><span>Mess Menu</span></a
+      >
+      <a href="posts.html"><i class="fas fa-clone"></i><span>Posts</span></a>
+      <a href="Laundry.html"><i class="fas fa-bath"></i><span>laundry</span></a>
+      <a href="profile.html"><i class="fas fa-user"></i><span>Profile</span></a>
+      <a href="contact.html"
+        ><i class="fas fa-info-circle"></i><span>Contacts</span></a
+      >
+    </div>
+    <div class="big_container">
+      <div class="content_dashboard1">
+        <div class="row_dash">
+          <div class="column_dash">
+            <div class="card_dash">
+              <h3>New Posts</h3>
+              <p>10 New Posts <i class="fas fa-clone"></i></p>
+              <p>My Posts: 5 <i class="fas fa-clone"></i></p>
+            </div>
+          </div>
+
+          <div class="column_dash">
+            <div class="card_dash2">
+              <h3>Laundry</h3>
+              <p>Clothes Pickup <i class="fas fa-bath"></i></p>
+              <p>Date: 12 July</p>
+            </div>
+          </div>
+
+          <div class="column_dash">
+            <div class="card_dash">
+              <h3>New Events</h3>
+              <p>Upcoming: Rakhi</p>
+              <p>Date: 2 August</p>
+            </div>
+          </div>
+
+          <div class="column_dash">
+            <div class="card_dash2">
+              <h3>Maintenance <i class="fas fa-cogs"></i></h3>
+              <p>No maintenance</p>
+              <p>Report in Posts</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h2>Create Post</h2>
+
+      <div class="container3">
+        <form action="/action_page.php">
+          <div class="row">
+            <div class="col-25">
+              <label for="fname">Name</label>
+            </div>
+            <div class="col-75">
+              <input
+                type="text"
+                id="fname"
+                name="firstname"
+                placeholder="Your name.."
+              />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label id="title" for="lname">Title</label>
+            </div>
+            <form action="/action_page.php" class="file_input">
+              <input type="file" id="myFile" name="filename" />
+              <input type="submit" />
+            </form>
+            <div class="col-75">
+              <input
+                type="text"
+                id="lname"
+                name="title"
+                placeholder="Post Title...."
+              />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="country">Tag</label>
+            </div>
+            <div class="col-75">
+              <select id="country" name="country">
+                <option value="australia">Student</option>
+                <option value="canada">CareTaker</option>
+                <option value="usa">Mess</option>
+                <option value="usa">Laundry</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="subject">Subject</label>
+            </div>
+            <div class="col-75">
+              <textarea
+                id="subject"
+                name="subject"
+                placeholder="Write something.."
+                style="height: 200px;"
+              ></textarea>
+            </div>
+          </div>
+          <div class="row">
+            <input type="submit" value="Submit" />
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
