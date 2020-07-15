@@ -15,13 +15,32 @@ router
       )
         .not()
         .isEmpty(),
+      check(
+        "clothes",
+        "You must provide the info about the clothes to create a reciept!"
+      )
+        .not()
+        .isEmpty(),
     ],
     laundryController.createReceipt
-  );
+  )
+  .get(auth, laundryController.getReceipts);
 
 router
-  .route("/:id")
-  .put(auth, laundryController.updateReceipt)
-  .delete(auth, laundryController.deleteReceipt);
+  .route("/search")
+  .post(
+    [
+      auth,
+      check(
+        "searchQuery",
+        "You must provide a laundry Number to search for reciepts!"
+      )
+        .not()
+        .isEmpty(),
+    ],
+    laundryController.searchReciept
+  );
+
+router.route("/:id").put(auth, laundryController.updateReceipt);
 
 module.exports = router;
