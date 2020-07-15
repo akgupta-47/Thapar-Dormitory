@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
+    />
+    <title>Student Dashboard</title>
+  </head>
+  <body>
+    <input type="checkbox" id="check" />
+    <header>
+      <label for="check">
+        <i class="fas fa-bars" id="sidebar_btn"></i>
+      </label>
+      <div class="left_area">
+        <h3>Student <span>Dashboard</span></h3>
+      </div>
+      <div class="right_area">
+        <a href="#" class="logout_btn">LogOut</a>
+      </div>
+    </header>
+
+    <div class="sidebar">
+      <center>
+        <img src="rishikesh_fav.jpeg" class="profile_image" alt="" />
+        <h4>Akshat</h4>
+      </center>
+      <a href="dashboard.html"><i class="fas fa-desktop"></i><span>Dashboard</span></a>
+      <a href="departure.html"><i class="fas fa-plane"></i><span>Departure Notice</span></a>
+      <a href="mess.html"><i class="fas fa-coffee"></i><span>Mess Menu</span></a>
+      <a href="posts.html"><i class="fas fa-clone"></i><span>Posts</span></a>
+      <a href="laundry.html"><i class="fas fa-bath"></i><span>laundry</span></a>
+      <a href="laundryCom.html"><i class="fas fa-bath"></i><span>laundry Committee</span></a>
+      <a href="profile.html"><i class="fas fa-user"></i><span>Profile</span></a>
+      <a href="contact.html"><i class="fas fa-info-circle"></i><span>Contacts</span></a>
+    </div>
+            <div class="wrap-search">
+          <div class="search">
+            <input type="text" class="searchTerm" placeholder="Search Laundry Receipt.....">
+            <button type="submit" class="searchButton">
+            <i class="fa fa-search"></i>
+            </button>
+        </div>
+      </div>
+        <div class="laun-committee">
+               <div class="wrapper-flex">
+    <div class="container_laundry">
+      <div class='banner-img'></div>
+      <img src='tshirt.png' alt='profile image' class="profile-img">
+      <h1 class="name">Akshat</h1>
+      <h1 class="name">Generate Receipt</h1>
+        <div class="col-3">
+            <input class="effect-1" type="text" placeholder="Laundry Number">
+            <span class="focus-border"></span>
+        </div>
+        <div class="col-3">
+            <input class="effect-1" type="text" placeholder="Entry Date">
+            <span class="focus-border"></span>
+        </div>
+        <div class="col-3">
+            <input class="effect-1" type="text" placeholder="Due Date">
+            <span class="focus-border"></span>
+        </div>
+        <div class="col-3">
+            <input class="effect-1" type="text" placeholder="Number of Clothes">
+            <span class="focus-border"></span>
+        </div>
+        <div class="col-3">
+            <input class="effect-1" type="text" placeholder="Torn Garments">
+            <span class="focus-border"></span>
+        </div>
+      <input type="submit" value="Done!!">
+    </div>
+
+        <div class="container_laundry">
+      <h1 class="name">Specify Clothes</h1>
+        <div class="col-3">
+            <input class="effect-1" type="text" placeholder="Pants">
+            <span class="focus-border"></span>
+        </div>
+        <div class="col-3">
+            <input class="effect-1" type="text" placeholder="Jeans">
+            <span class="focus-border"></span>
+        </div>
+        <div class="col-3">
+            <input class="effect-1" type="text" placeholder="Pjamas/Shorts">
+            <span class="focus-border"></span>
+        </div>
+        <div class="col-3">
+            <input class="effect-1" type="text" placeholder="Shirts">
+            <span class="focus-border"></span>
+        </div>
+        <div class="col-3">
+            <input class="effect-1" type="text" placeholder="T-Shirts/Upper-Hoods">
+            <span class="focus-border"></span>
+        </div>
+                <div class="col-3">
+            <input class="effect-1" type="text" placeholder="Kurta/Salwar">
+            <span class="focus-border"></span>
+        </div>
+                <div class="col-3">
+            <input class="effect-1" type="text" placeholder="Bed Sheet">
+            <span class="focus-border"></span>
+        </div>
+                <div class="col-3">
+            <input class="effect-1" type="text" placeholder="Pillow covers">
+            <span class="focus-border"></span>
+        </div>
+                <div class="col-3">
+            <input class="effect-1" type="text" placeholder="Towels">
+            <span class="focus-border"></span>
+        </div>
+                        <div class="col-3">
+            <input class="effect-1" type="text" placeholder="Turban/Dupatta">
+            <span class="focus-border"></span>
+        </div>
+    </div>
+
+    <div class="container_laundry">
+      <div class='banner-img'></div>
+      <img src='tshirt.png' alt='profile image' class="profile-img">
+      <p class="name">Akshat</p>
+      <p class="name">Generated Receipt</p>
+      <h4>Name :  Akshat</h4>
+      <h4>Entry Date   :  9-2-20</h4>
+      <h4>Due date     :  12-2-20</h4>
+      <h4>Number of CLothes     :  9</h4>
+      <h4>Torn Garments     :  None</h4>
+        <div class="col-3">
+            <input class="effect-1" type="text" placeholder="Report Problems">
+            <span class="focus-border"></span>
+        </div>
+              <input type="submit" value="Done!!" id="done">
+   </div>
+        </div>
+  </body>
+</html>
