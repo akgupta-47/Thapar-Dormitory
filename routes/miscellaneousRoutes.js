@@ -109,4 +109,25 @@ router.post("/messmenu", [auth, upload.single('image')], async(req,res)=>{
   }
 })
 
+router.get("/contacts", auth, async (req,res)=>{
+  const userProfile = await Profile.findOne({user:req.user.id});
+  const allInSameHostel = await Profile.find({hostel:userProfile.hostel});
+  const  importantPeople = allInSameHostel.filter(person=>{
+    if(person.role === 'Warden' || person.role === 'Caretaker' || person.role === 'Cleaning service')
+      return true
+  });
+  let contacts = [];
+  for(let i =0; i<importantPeople.length; i++)
+  {
+    const impPerson = await User.findById(importantPeople[i].user).select('-password');
+    contacts.push({
+      name:impPerson.name,
+      email:impPerson.email,
+      phoneNumber:importantPeople[i].phoneNumber,
+      role:importantPeople[i].role
+    })
+  }
+  res.json(contacts);
+})
+
 module.exports = router;
