@@ -22,6 +22,11 @@ exports.getAllPosts = async (req, res) => {
     })
     if(posts.length === 0)
       return res.json({status: "fail", message: 'No posts to show!'})
+    let seenPosts = posts.map(post=>{
+      return post.id;
+    });
+    userProfile.seenPosts = seenPosts;
+    userProfile.save();
     res.status(200).json({
       status: "success",
       results: posts.length,
