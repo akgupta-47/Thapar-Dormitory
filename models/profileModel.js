@@ -35,6 +35,7 @@ const profileSchema = new Schema({
     minlength: 10,
     maxlength: 10,
   },
+  seenPosts:[mongoose.Schema.Types.ObjectId]
 });
 
 const Profile = mongoose.model('profile', profileSchema);
