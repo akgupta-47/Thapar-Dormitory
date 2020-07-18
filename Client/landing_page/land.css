@@ -1,0 +1,165 @@
+svg {
+  width: 100px;
+  height: 120px;
+  transform: translate(-100px, -30px);
+}
+
+h2 {
+  transform: translate(-170%, 200%);
+  font-size: 42px;
+  color: black;
+}
+
+body {
+  font-family: "Source Sans Pro", sans-serif;
+  color: #fff;
+  background: url(Abstract-3d-art-background.png) no-repeat right top #63d6d6;
+}
+
+.container {
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 2em 1em;
+}
+
+header {
+  text-align: center;
+}
+
+#hostel-logo {
+  width: 180px;
+}
+
+nav {
+  margin: 2em auto 0;
+  max-width: 600px;
+  transform: translate(70%, -70%);
+}
+
+nav ul {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-items: space-between;
+}
+
+nav ul li {
+  list-style: none;
+}
+
+nav ul li a {
+  background-color: #ffdb37;
+  padding: 10px;
+  border-radius: 50px;
+  font-size: 1.35em;
+  color: black;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+main {
+  display: flex;
+  flex-flow: column;
+}
+
+.hero {
+  text-align: center;
+  transform: translate(-10%, -20%);
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.hero p {
+  font-size: 1.2em;
+  color: rgb(51, 48, 48);
+  font-weight: 600;
+  max-width: 500px;
+  transform: translateY(-5%);
+}
+
+.hero p:before {
+  content: "";
+  display: block;
+  width: 120px;
+  border: 4px solid #ffdb37;
+  margin: 1em auto;
+}
+
+.hero a {
+  background: #ffd52e;
+  padding: 1em 3em;
+  border-radius: 50px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.375em;
+  transform: translateY(-10%);
+  font-weight: 700;
+}
+
+figure {
+  text-align: center;
+}
+
+figure svg {
+  margin: 3em auto 0;
+  width: 450px;
+  height: 450px;
+  transform: translate(140%, -160%);
+}
+
+@media screen and (min-width: 820px) {
+  header {
+    display: flex;
+    justify-content: space-between;
+    flex-flow: wrap;
+    align-items: center;
+  }
+  nav {
+    margin: 0;
+  }
+  nav ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+  nav ul li {
+    list-style: none;
+    padding: 0.5em 2em;
+  }
+  nav ul li a {
+    font-size: 1.375em;
+    color: #ffffff;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .highlight {
+    border: 3px solid #ffdb37;
+    padding: 10px;
+    color: black;
+    border-radius: 50px;
+  }
+  .hero {
+    text-align: left;
+  }
+  .hero h1 {
+    font-size: 4em;
+  }
+  .hero p:before {
+    margin: 1em 0;
+  }
+  .hero p {
+    font-size: 1.3em;
+    padding: 0;
+    margin: 0 0 3em 0;
+  }
+  .hero a {
+    background: #ffdb37;
+  }
+  .figure svg {
+    width: 300px;
+    margin: 0;
+  }
+}
