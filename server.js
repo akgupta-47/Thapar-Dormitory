@@ -4,28 +4,33 @@ const dotenv = require('dotenv');
 const morgan = require('morgan');
 require('./config/db');
 
-dotenv.config();
-const app = express();
-app.use(express.json());
-
-const routes = require('./routes/postRoutes');
-
-if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'));
-}
-// this is hostel
-app.use('/api/auth', require('./routes/authRoutes'));
-app.use('/posts', routes);
-app.use('/api/image', require('./routes/imageRoutes'));
-app.use('/api/profile', require('./routes/profileRoutes'));
-app.use('/api/laundry', require('./routes/laundryRoutes'));
-app.use('/api', require('./routes/miscellaneousRoutes'));
-
-app.get('/', (req, res) => {
-  res.status(200).send('server says hello');
+process.on('uncaughtException', (err) => {
+  console.log('UNCAUGHT EXCEPTION! 💥 Shutting down...');
+  console.log(err.name, err.stack);
+  //console.log(err.name, err.message);
+  process.exit(1);
 });
 
+const app = require('./app');
+
+dotenv.config();
+
 const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`the app is running at ${port}...`);
+const server = app.listen(port, () => {
+  console.log(`App running on port ${port}...`);
+});
+
+process.on('unhandledRejection', (err) => {
+  console.log('UNHANDLED REJECTION! 💥 Shutting down...');
+  console.log(err.name, err.message);
+  server.close(() => {
+    process.exit(1);
+  });
+});
+
+process.on('SIGTERM', () => {
+  console.log('👋 SIGTERM RECEIVED. Shutting down gracefully');
+  server.close(() => {
+    console.log('💥 Process terminated!');
+  });
 });
