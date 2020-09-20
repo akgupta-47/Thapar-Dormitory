@@ -7,6 +7,7 @@ const laundrySchema = new mongoose.Schema({
   },
   laundryNumber: {
     type: String,
+    required: true,
   },
   enrty_date: {
     type: Date,
