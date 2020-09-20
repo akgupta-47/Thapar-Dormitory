@@ -5,17 +5,21 @@ const Laundry = require('../models/laundryModel');
 const Profile = require('../models/profileModel');
 const { validationResult } = require('express-validator');
 
+// Update reciepts
 exports.updateReceipt = catchAsync(async (req, res) => {
+  // get receipt
   const receipt = await Laundry.findById(req.params.id);
   if (!receipt) {
     return next(new AppError('No receipt with that id', 404));
   }
 
+  // get corresponding user profile
   const userProfile = await Profile.findOne({ user: req.user.id });
   if (!userProfile) {
     return next(new AppError('No document with that id', 404));
   }
 
+  // check if the role is laundry committe
   if (userProfile.role == 'Laundry attendant') {
     receipt.laundryWorkerStatus = true;
     await receipt.save();
@@ -28,6 +32,7 @@ exports.updateReceipt = catchAsync(async (req, res) => {
         "This laundry reciept doesn't belong to you or you are not a Laundry attendant",
     });
 
+  // validate if laundry was done fine and delete receipt from database
   if (receipt.studentStatus == true && receipt.laundryWorkerStatus == true) {
     const deletedReciept = await Laundry.findByIdAndDelete(req.params.id);
     console.log(deletedReciept);
@@ -36,6 +41,8 @@ exports.updateReceipt = catchAsync(async (req, res) => {
         'The reciept has successfully been deleted due to confirmation of delivery by the student!',
     });
   }
+
+  // send the receipt
   res.status(200).json({
     status: 'success',
     data: {
@@ -44,13 +51,16 @@ exports.updateReceipt = catchAsync(async (req, res) => {
   });
 });
 
+// create the laundry receiipt
 exports.createReceipt = catchAsync(async (req, res) => {
+  // check for validation of input errors
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     console.log(errors);
     return res.status(400).json({ errors: errors.array() });
   }
 
+  // get profile of person creating the receipt
   const creatorProfile = await Profile.findOne({ user: req.user.id });
   if (creatorProfile.role !== 'Laundry attendant')
     return res.status(401).json({
@@ -58,16 +68,19 @@ exports.createReceipt = catchAsync(async (req, res) => {
         'You are not a Laundry attendant and are not authorised to do this!',
     });
 
+  // enter the laundry id and amount of clothes , also details of torned ones
   const { laundryNumber, torn, clothes } = req.body;
   let receipt = {};
   receipt.laundryNumber = laundryNumber.toUpperCase().trim();
   receipt.creator = req.user.id;
 
+  // get student based on their laundry number
   const studentProfile = await Profile.findOne({
     laundryNumber: laundryNumber,
   });
   receipt.studentPhone = studentProfile.phoneNumber;
 
+  // check if the cloth is torned
   if (torn) receipt.torn = torn;
   receipt.clothesAmount = 0;
   clothes.map((clothCategory) => {
@@ -75,6 +88,7 @@ exports.createReceipt = catchAsync(async (req, res) => {
   });
   receipt.clothes = clothes;
 
+  // issue a new receipt
   const newReceipt = await new Laundry(receipt).save();
   res.status(201).json({
     status: 'success',
@@ -84,12 +98,15 @@ exports.createReceipt = catchAsync(async (req, res) => {
   });
 });
 
+// get laundry receipt
 exports.getReceipts = catchAsync(async (req, res) => {
+  // get the user related to receipt
   const currentUser = await Profile.findOne({ user: req.user.id });
   if (!currentUser) {
     return next(new AppError('No document with that id', 404));
   }
 
+  // get the receipt history based on laundry number
   const reciepts = await Laundry.find({
     laundryNumber: currentUser.laundryNumber,
   });
@@ -109,6 +126,7 @@ exports.getReceipts = catchAsync(async (req, res) => {
   });
 });
 
+// search for a particular receipt
 exports.searchReciept = catchAsync(async (req, res) => {
   const currentUserProfile = await Profile.findOne({ user: req.user.id });
   if (!currentUserProfile) {

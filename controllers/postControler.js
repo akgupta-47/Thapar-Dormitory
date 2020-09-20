@@ -5,6 +5,7 @@ const Profile = require('../models/profileModel');
 const Post = require('../models/postModel');
 const { getGfs, getGis } = require('../config/db');
 
+// get all posts
 exports.getAllPosts = catchAsync(async (req, res) => {
   const userProfile = await Profile.findOne({ user: req.user.id });
   if (!userProfile) {
@@ -16,6 +17,7 @@ exports.getAllPosts = catchAsync(async (req, res) => {
     return next(new AppError('No document with that id', 404));
   }
 
+  // retreiv posts based on official or unofficail
   const posts = retrievedPosts.filter((retrievedPost) => {
     if (
       retrievedPost.hostel === userProfile.hostel &&
